@@ -1,0 +1,40 @@
+.add-product-card {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+
+  mat-card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+  }
+
+  .form-actions {
+    margin-top: 20px;
+    text-align: right;
+  }
+}
+.custom-btn {
+  padding: 10px 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  color: #f8faf9 !important;
+  background-color: #788978 !important;
+  transition: all 0.2s ease-in-out;
+  box-shadow: none;
+  position: relative;
+  top: -94px !important;
+  padding: 28px !important;
+}
+
+.custom-btn:hover {
+  background-color: #c3caa1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}

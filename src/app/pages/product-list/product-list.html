@@ -1,0 +1,39 @@
+<div class="top-bar mat-elevation-z2">
+  <!-- Search -->
+  <mat-form-field appearance="outline" class="search-field">
+    <mat-label>Search products</mat-label>
+    <input matInput [(ngModel)]="searchTerm" placeholder="Type to search..." />
+  </mat-form-field>
+
+  <!-- Barcode -->
+  <div class="barcode-area">
+    <mat-form-field appearance="outline" class="barcode-field">
+      <mat-label>Scan barcode</mat-label>
+      <input matInput [(ngModel)]="barcodeInput" (keyup.enter)="addByBarcode()" />
+    </mat-form-field>
+
+    <button mat-raised-button class="custom-btn" color="primary" (click)="addByBarcode()">
+      Add
+    </button>
+  </div>
+</div>
+
+
+<!-- Products Grid -->
+<div class="product-grid">
+  <mat-card *ngFor="let product of filteredProducts" class="product-card mat-elevation-z4">
+    <img mat-card-image [src]="product.image" [alt]="product.name" />
+
+    <mat-card-content>
+      <h3>{{ product.name }}</h3>
+      <p>${{ product.price }}</p>
+      <p class="category">{{ product.category }}</p>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="warn" (click)="addToCart(product)">
+        Add to Cart
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

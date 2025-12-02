@@ -1,0 +1,139 @@
+/* Top Bar */
+.top-bar {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 12px;
+  background: #f8faf9;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #d9d3c6;
+}
+
+/* Search field styling */
+.search-field {
+  flex: 1;
+}
+
+.search-field .mat-form-field-outline {
+  border-radius: 8px;
+}
+
+.search-field .mat-form-field-infix {
+  padding: 0 12px; /* Adds space between text and border */
+}
+
+/* Barcode area */
+.barcode-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.barcode-field {
+  width: 180px;
+}
+
+.barcode-field .mat-form-field-infix {
+  padding: 0 12px;
+}
+
+/* Buttons */
+/* Target raised buttons with color set to none to override Angular Material */
+.custom-btn {
+  padding: 10px 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  color: #f8faf9 !important;
+  background-color: #788978 !important;
+  transition: all 0.2s ease-in-out;
+  box-shadow: none;
+  position: relative;
+  top: -10px !important;
+  padding: 28px !important;
+}
+
+.custom-btn:hover {
+  background-color: #c3caa1;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Remove Angular Material's internal overlay color on hover */
+.custom-btn .mat-ripple-element {
+  display: none;
+}
+
+
+
+/* Products Grid */
+.product-grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* Material Card Styling */
+.product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+  border-radius: 12px;
+  background-color: #f8faf9; /* Original card color */
+}
+
+/* Zebra effect for cards */
+.product-card:nth-child(odd) {
+  background-color: #f0f3f0;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  background-color: #e6ebea;
+}
+
+/* Card image */
+.product-card img {
+  height: 180px;
+  object-fit: contain;
+  border-radius: 12px 12px 0 0;
+}
+
+/* Card text */
+.product-card h3 {
+  font-size: 18px;
+  margin: 10px 0 4px 0;
+  color: #2f362f;
+}
+
+.product-card p {
+  margin: 0;
+  color: #788978;
+  font-weight: 500;
+}
+
+.product-card .category {
+  font-size: 12px;
+  color: #a0a999;
+  margin-top: 4px;
+}
+
+/* Card actions */
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
+}
+
+/* Add padding inside Angular Material input properly */
+.search-field .mat-form-field-infix,
+.barcode-field .mat-form-field-infix {
+  padding: 12px 14px; /* top/bottom 12px, left/right 14px */
+}
+
+/* Optional: make placeholder not too close */
+.mat-form-field-label {
+  padding-left: 2px;
+}

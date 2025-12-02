@@ -1,0 +1,43 @@
+<mat-card class="add-product-card">
+  <mat-card-title>Add New Product</mat-card-title>
+  <mat-card-content>
+    <div class="form-grid">
+      <!-- Product Name -->
+      <mat-form-field appearance="outline">
+        <mat-label>Product Name</mat-label>
+        <input matInput placeholder="Enter product name" [(ngModel)]="name">
+      </mat-form-field>
+
+      <!-- Price -->
+      <mat-form-field appearance="outline">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" placeholder="Enter price" [(ngModel)]="price">
+      </mat-form-field>
+
+      <!-- Category -->
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <mat-select [(ngModel)]="category">
+          <mat-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Image URL -->
+      <mat-form-field appearance="outline">
+        <mat-label>Image URL</mat-label>
+        <input matInput placeholder="Enter image URL" [(ngModel)]="image">
+      </mat-form-field>
+
+      <!-- Barcode -->
+      <mat-form-field appearance="outline">
+        <mat-label>Barcode</mat-label>
+        <input matInput placeholder="Enter barcode" [(ngModel)]="barcode">
+      </mat-form-field>
+    </div>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" class="custom-btn" (click)="addProduct()">Add Product</button>
+    </div>
+  </mat-card-content>
+</mat-card>
+

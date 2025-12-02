@@ -1,0 +1,39 @@
+<div class="cart-container">
+
+  <h2 class="title">🛒 Cart</h2>
+
+  <div *ngIf="cartItems.length === 0" class="empty">
+    Cart is empty
+  </div>
+
+  <div class="cart-item" *ngFor="let item of cartItems">
+
+    <div class="item-left">
+      <img *ngIf="item.image" [src]="item.image" class="thumb">
+      <div>
+        <h4>{{ item.name }}</h4>
+        <p>Price: {{ item.price | currency:'USD' }}</p>
+        <p *ngIf="item.barcode">Barcode: {{ item.barcode }}</p>
+      </div>
+    </div>
+
+    <div class="qty-controls">
+      <button (click)="decrease(item)">−</button>
+      <span>{{ item.quantity }}</span>
+      <button (click)="increase(item)">+</button>
+    </div>
+
+    <div class="item-total">
+      {{ item.price * item.quantity | currency:'USD' }}
+    </div>
+
+    <button class="remove-btn" (click)="remove(item)">🗑️</button>
+
+  </div>
+
+  <div class="footer" *ngIf="cartItems.length > 0">
+    <h3>Total: {{ getTotal() | currency:'USD' }}</h3>
+    <button class="checkout-btn" (click)="checkout()">Checkout</button>
+  </div>
+
+</div>

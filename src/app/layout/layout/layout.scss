@@ -1,0 +1,234 @@
+/* Container */
+.pos-container {
+  height: 100vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Sidebar */
+.pos-sidenav {
+  width: 240px;
+  background-color: #2f362f; /* Dark gray/green */
+  color: #ffffff;
+  border-right: 1px solid #d9d3c6; /* Sand Dollar border */
+}
+
+/* Sidebar toolbar */
+.sidenav-header {
+  font-weight: bold;
+  height: 64px;
+  color: #d9d3c6; /* Sand Dollar text */
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+}
+
+/* Menu items */
+.menu-item {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  transition: all 0.2s;
+}
+
+.menu-item mat-icon {
+  font-size: 24px;
+  color: #788978; /* Celadon icons */
+}
+
+.menu-item:hover {
+  background-color: #d9d3c6; /* Sand Dollar hover */
+  color: #2f362f;
+  border-left: 4px solid #788978;
+}
+
+.menu-text {
+  margin-left: 12px;
+  font-weight: 500;
+}
+
+.menu-item.active {
+  background-color: #d9d3c6; /* Sand Dollar highlight */
+  color: #2f362f;
+  border-left: 4px solid #788978; /* Celadon border */
+}
+
+.menu-item.active mat-icon {
+  color: #2f362f; /* Dark icon for active */
+}
+
+
+/* Top toolbar */
+.top-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #ffffff; /* White */
+  color: #2f362f;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  height: 64px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Hamburger Menu */
+.hamburger {
+  width: 30px;
+  height: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-right: 16px;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: #ff6600; /* Orange lines */
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Spacer */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Top icons */
+.top-icon {
+  position: relative;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.top-icon mat-icon {
+  font-size: 28px;
+  color: #788978; /* Celadon */
+}
+
+.icon-badge {
+   position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff6600; /* Orange */
+  color: white;
+  width: 16px;
+  height: 16px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+/* Animate on change */
+.icon-badge.bump {
+  transform: scale(1.3);
+  background-color: #ffa500;
+}
+
+/* Main content */
+.pos-content {
+  padding: 20px;
+  background-color: #f8faf9; /* Light gray */
+  min-height: calc(100vh - 64px);
+}
+
+/* Responsive sidebar */
+@media (max-width: 768px) {
+  .pos-sidenav {
+    width: 200px;
+  }
+}
+.mini-cart {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  width: 220px;
+  background: #f8faf9;
+  color: #2f362f;
+  border: 1px solid #d9d3c6;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  padding: 10px;
+  z-index: 20;
+}
+
+.mini-cart-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.mini-cart-total {
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.mini-cart button {
+  width: 100%;
+  padding: 6px 0;
+  background: #788978;
+  color: #f8faf9;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.top-icon mat-icon {
+  font-size: 23px;
+  color: #788978; /* Celadon */
+}
+
+
+.account-dropdown {
+  position: absolute;
+  top: 36px;
+  right: 0;
+  width: 160px;
+  background: #f8faf9;
+  color: #2f362f;
+  border: 1px solid #d9d3c6;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 20;
+  padding: 5px 0;
+}
+
+.account-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.account-item:hover {
+  background-color: #788978;
+  color: #f8faf9;
+}
+
+.account-item.logout {
+  font-weight: bold;
+  color: #ff6600;
+}
+
+.account-item.logout:hover {
+  background-color: #ff6600;
+  color: #ffffff;
+}
