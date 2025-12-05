@@ -1,18 +1,18 @@
 /* Top Bar */
 .top-bar {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
   align-items: center;
   padding: 12px;
   background: #f8faf9;
-  position: relative;
-  top: 0;
   border-bottom: 1px solid #d9d3c6;
 }
 
 /* Search field styling */
 .search-field {
-  flex: 1;
+  flex: 1 1 200px; /* Grow and shrink, min 200px */
+  min-width: 150px;
 }
 
 .search-field .mat-form-field-outline {
@@ -20,26 +20,28 @@
 }
 
 .search-field .mat-form-field-infix {
-  padding: 0 12px; /* Adds space between text and border */
+  padding: 0 12px;
 }
 
 /* Barcode area */
 .barcode-area {
   display: flex;
+  flex: 0 1 auto;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .barcode-field {
   width: 180px;
+  min-width: 120px;
 }
 
 .barcode-field .mat-form-field-infix {
   padding: 0 12px;
 }
 
-/* Buttons */
-/* Target raised buttons with color set to none to override Angular Material */
+/* Add button */
 .custom-btn {
   padding: 10px 16px;
   font-weight: bold;
@@ -48,9 +50,10 @@
   background-color: #788978 !important;
   transition: all 0.2s ease-in-out;
   box-shadow: none;
+  min-width: 60px;
+  padding: 25px;
   position: relative;
-  top: -10px !important;
-  padding: 28px !important;
+  top:-9px
 }
 
 .custom-btn:hover {
@@ -59,12 +62,9 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-/* Remove Angular Material's internal overlay color on hover */
 .custom-btn .mat-ripple-element {
   display: none;
 }
-
-
 
 /* Products Grid */
 .product-grid {
@@ -74,22 +74,21 @@
   gap: 20px;
 }
 
-/* Material Card Styling */
+/* Product Card */
 .product-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   cursor: pointer;
   border-radius: 12px;
-  background-color: #f8faf9; /* Original card color */
+  background-color: #f8faf9;
 }
 
-/* Zebra effect for cards */
 .product-card:nth-child(odd) {
   background-color: #f0f3f0;
 }
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
   background-color: #e6ebea;
 }
 
@@ -126,13 +125,51 @@ mat-card-actions {
   padding-bottom: 15px;
 }
 
-/* Add padding inside Angular Material input properly */
-.search-field .mat-form-field-infix,
-.barcode-field .mat-form-field-infix {
-  padding: 12px 14px; /* top/bottom 12px, left/right 14px */
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .barcode-area {
+    justify-content: flex-start;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .barcode-field {
+    width: 100%;
+  }
+
+  .custom-btn {
+    width: 100%;
+    padding: 12px 0;
+  }
+
+  .search-field {
+    width: 100%;
+    flex: none;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
 }
 
-/* Optional: make placeholder not too close */
-.mat-form-field-label {
-  padding-left: 2px;
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .top-bar {
+    gap: 8px;
+  }
+
+  .custom-btn {
+    font-size: 14px;
+    padding: 10px 0;
+  }
 }

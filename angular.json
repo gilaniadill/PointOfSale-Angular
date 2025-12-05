@@ -71,12 +71,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "pos-dashboard:build"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "pos-dashboard:build:production"
+              "buildTarget": "pos-dashboard:build:production"
             },
             "development": {
-              "browserTarget": "pos-dashboard:build:development"
+              "buildTarget": "pos-dashboard:build:development"
             }
           },
           "defaultConfiguration": "development"

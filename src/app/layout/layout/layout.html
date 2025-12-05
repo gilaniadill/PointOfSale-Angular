@@ -1,41 +1,31 @@
-<mat-sidenav-container class="pos-container">
+<mat-sidenav-container class="pos-container" (backdropClick)="isMobile && sidenav.close()">
 
   <!-- Sidebar -->
   <mat-sidenav #sidenav
-    [mode]="'side'"
+    [mode]="isMobile ? 'over' : 'side'"
     [opened]="sidebarOpen"
     class="pos-sidenav">
 
     <mat-toolbar class="sidenav-header">
-      <span *ngIf="sidebarOpen">POS Dashboard</span>
-      <span *ngIf="!sidebarOpen">POS</span>
+      <span>POS Dashboard</span>
     </mat-toolbar>
 
     <mat-nav-list>
-
       <a mat-list-item routerLink="/" class="menu-item" [class.active]="isActive('/')">
         <mat-icon>storefront</mat-icon>
-        <span class="menu-text" *ngIf="sidebarOpen">Products</span>
+        <span class="menu-text">Products</span>
       </a>
 
       <a mat-list-item routerLink="/cart" class="menu-item" [class.active]="isActive('/cart')">
         <mat-icon>shopping_cart</mat-icon>
-        <span class="menu-text" *ngIf="sidebarOpen">Cart</span>
+        <span class="menu-text">Cart</span>
       </a>
 
       <a mat-list-item routerLink="/add-product" class="menu-item" [class.active]="isActive('/add-product')">
-  <mat-icon>add_circle</mat-icon>
-  <span class="menu-text" *ngIf="sidebarOpen">Add New Product</span>
-</a>
-
-
-      <!-- <a mat-list-item routerLink="/checkout" class="menu-item">
-        <mat-icon>credit_card</mat-icon>
-        <span class="menu-text" *ngIf="sidebarOpen">Checkout</span>
-      </a> -->
-
+        <mat-icon>add_circle</mat-icon>
+        <span class="menu-text">Add New Product</span>
+      </a>
     </mat-nav-list>
-
   </mat-sidenav>
 
   <!-- Main Content -->
@@ -43,8 +33,8 @@
 
     <!-- Top Toolbar -->
     <mat-toolbar class="top-toolbar">
-      <!-- Hamburger Toggle -->
-      <div class="hamburger" [class.open]="!sidebarOpen" (click)="toggleSideBar()">
+      <!-- Hamburger -->
+      <div class="hamburger" [class.open]="sidebarOpen" (click)="toggleSideBar()">
         <span></span>
         <span></span>
         <span></span>
@@ -54,43 +44,37 @@
 
       <span class="spacer"></span>
 
-      <button mat-icon-button color="primary" routerLink="/add-product">
-  <mat-icon>add</mat-icon>
-</button>
+      <button mat-icon-button class="add-icon" color="primary" routerLink="/add-product">
+        <mat-icon>add</mat-icon>
+      </button>
 
-
-
-      <!-- Cart Icon -->
+      <!-- Mini-cart -->
       <div class="top-icon" (click)="toggleMiniCart()" [class.open]="miniCartOpen">
-  <mat-icon>shopping_cart</mat-icon>
-  <span class="icon-badge" [class.bump]="badgeBump">{{ cartCount }}</span>
+        <mat-icon>shopping_cart</mat-icon>
+        <span class="icon-badge" [class.bump]="badgeBump">{{ cartCount }}</span>
 
-  <!-- Mini Cart Dropdown -->
-  <div class="top-icon mini-cart" *ngIf="miniCartOpen && cartCount > 0">
-    <div class="mini-cart-item" *ngFor="let item of cartService.getCartItems()">
-      <span>{{ item.name }} (x{{ item.quantity }})</span>
-      <span>{{ item.price * item.quantity | currency:'USD' }}</span>
-    </div>
-    <hr>
-    <div class="mini-cart-total">
-      Total: {{ cartService.getTotal() | currency:'USD' }}
-    </div>
-    <button (click)="goToCart()">Go to Cart</button>
-  </div>
-</div>
+        <div class="top-icon mini-cart" *ngIf="miniCartOpen && cartCount > 0">
+          <div class="mini-cart-item" *ngFor="let item of cartService.getCartItems()">
+            <span>{{ item.name }} (x{{ item.quantity }})</span>
+            <span>{{ item.price * item.quantity | currency:'USD' }}</span>
+          </div>
+          <hr>
+          <div class="mini-cart-total">
+            Total: {{ cartService.getTotal() | currency:'USD' }}
+          </div>
+          <button (click)="goToCart()">Go to Cart</button>
+        </div>
+      </div>
 
-      <!-- Account Icon -->
-      <!-- Account Icon -->
-<div class="top-icon account" (click)="toggleAccountMenu()" [class.open]="accountMenuOpen">
-  <mat-icon>account_circle</mat-icon>
-
-  <!-- Account Dropdown -->
-  <div class="account-dropdown" *ngIf="accountMenuOpen">
-    <div class="account-item" (click)="goToProfile()">Profile</div>
-    <div class="account-item" (click)="goToSettings()">Settings</div>
-    <div class="account-item logout" (click)="logout()">Logout</div>
-  </div>
-</div>
+      <!-- Account -->
+      <div class="top-icon account" (click)="toggleAccountMenu()" [class.open]="accountMenuOpen">
+        <mat-icon>account_circle</mat-icon>
+        <div class="account-dropdown" *ngIf="accountMenuOpen">
+          <div class="account-item" (click)="goToProfile()">Profile</div>
+          <div class="account-item" (click)="goToSettings()">Settings</div>
+          <div class="account-item logout" (click)="logout()">Logout</div>
+        </div>
+      </div>
 
     </mat-toolbar>
 

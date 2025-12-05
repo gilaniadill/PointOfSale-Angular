@@ -1,4 +1,4 @@
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from "@angular/router";
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -6,127 +6,132 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { CartService } from '../../services/services/cart';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet, RouterLink,
-     MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
-    CommonModule
-
+  standalone: true,
+  imports: [
+    RouterOutlet, RouterLink,
+    MatSidenavModule, MatToolbarModule, MatIconModule, MatListModule, CommonModule
   ],
   templateUrl: './layout.html',
-  styleUrl: './layout.scss',
+  styleUrls: ['./layout.scss'],
 })
 export class Layout {
-  sidebarOpen: boolean=true;
-
+  sidebarOpen: boolean = true;
   miniCartOpen: boolean = false;
- badgeBump: boolean = false;
+  accountMenuOpen: boolean = false;
+  badgeBump: boolean = false;
+  pageTitle: string = 'Products';
+  currentRoute: string = '';
+  isMobile: boolean = false;
 
-   pageTitle: string = 'Products';
-   currentRoute: string = '';
+  lastCartCount = 0;
 
+  constructor(
+    public cartService: CartService,
+    private router: Router,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    // Detect screen size for mobile
+    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe(result => {
+      this.isMobile = result.matches;
+      if (this.isMobile) this.sidebarOpen = false;
+      else this.sidebarOpen = true;
+    });
 
-  constructor(public cartService: CartService,private router: Router) {
-     this.router.events.pipe(
-    filter(event => event instanceof NavigationEnd)
-  ).subscribe((event: NavigationEnd) => {
-    this.currentRoute = event.urlAfterRedirects;
-    this.updatePageTitle(this.currentRoute);
-  });
+    // Update current route & page title
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.currentRoute = event.urlAfterRedirects;
+      this.updatePageTitle(this.currentRoute);
+    });
   }
+
   // Check if a route is active
   isActive(route: string): boolean {
-  return this.currentRoute === route || (route === '/' && this.currentRoute === '');
-}
-
-   updatePageTitle(url: string) {
-    if (url.includes('/cart')) {
-      this.pageTitle = 'Cart';
-    } else if (url.includes('/products') || url === '/' || url === '') {
-      this.pageTitle = 'Products';
-    } else if (url.includes('/checkout')) {
-      this.pageTitle = 'Checkout';
-    } else {
-      this.pageTitle = 'POS Dashboard';
-    }
+    return this.currentRoute === route || (route === '/' && this.currentRoute === '');
   }
 
-   get cartCount() {
+  // Update page title based on route
+  updatePageTitle(url: string) {
+    if (url.includes('/cart')) this.pageTitle = 'Cart';
+    else if (url.includes('/products') || url === '/' || url === '') this.pageTitle = 'Products';
+    else if (url.includes('/checkout')) this.pageTitle = 'Checkout';
+    else this.pageTitle = 'POS Dashboard';
+  }
+
+  // Cart count
+  get cartCount() {
     return this.cartService.getCartItems().length;
   }
 
-  toggleSideBar(){
-    this.sidebarOpen = !this.sidebarOpen;
+  // Toggle sidebar
+  toggleSideBar() {
+    if (this.isMobile) {
+      // On mobile, toggle overlay sidenav
+      this.sidebarOpen = !this.sidebarOpen;
+    } else {
+      this.sidebarOpen = !this.sidebarOpen;
+    }
   }
 
-
+  // Mini cart toggle
   toggleMiniCart() {
-  this.miniCartOpen = !this.miniCartOpen;
-}
-
-goToCart() {
-  this.miniCartOpen = false;
-  this.router.navigate(['/cart']);
-}
-
-// Animate badge whenever cart changes
-ngDoCheck() {
-  if (this.cartCount !== this.lastCartCount) {
-    this.badgeBump = true;
-    setTimeout(() => this.badgeBump = false, 300);
-    this.lastCartCount = this.cartCount;
+    this.miniCartOpen = !this.miniCartOpen;
   }
-}
 
-lastCartCount = 0;
+  goToCart() {
+    this.miniCartOpen = false;
+    this.router.navigate(['/cart']);
+  }
 
+  // Animate badge when cart changes
+  ngDoCheck() {
+    if (this.cartCount !== this.lastCartCount) {
+      this.badgeBump = true;
+      setTimeout(() => this.badgeBump = false, 300);
+      this.lastCartCount = this.cartCount;
+    }
+  }
 
+  // Account menu toggle
+  toggleAccountMenu() {
+    this.accountMenuOpen = !this.accountMenuOpen;
+  }
 
-accountMenuOpen: boolean = false;
+  goToProfile() {
+    this.accountMenuOpen = false;
+    this.router.navigate(['/profile']);
+  }
 
-toggleAccountMenu() {
-  this.accountMenuOpen = !this.accountMenuOpen;
-}
+  goToSettings() {
+    this.accountMenuOpen = false;
+    this.router.navigate(['/settings']);
+  }
 
-// Navigate to profile page
-goToProfile() {
-  this.accountMenuOpen = false;
-  this.router.navigate(['/profile']);
-}
-
-// Navigate to settings page
-goToSettings() {
-  this.accountMenuOpen = false;
-  this.router.navigate(['/settings']);
-}
-
-// Logout functionality
-logout() {
-  this.accountMenuOpen = false;
-  // Example: clear localStorage/session and redirect to login
-  localStorage.clear();
-  this.router.navigate(['/login']);
-}
+  logout() {
+    this.accountMenuOpen = false;
+    localStorage.clear();
+    this.router.navigate(['/login']);
+  }
 
   // Close dropdowns if click outside
   @HostListener('document:click', ['$event'])
   handleClick(event: Event) {
     const target = event.target as HTMLElement;
 
-    // Mini cart
+    // Close mini cart if click outside
     if (!target.closest('.top-icon') && this.miniCartOpen) {
       this.miniCartOpen = false;
     }
 
-    // Account menu
+    // Close account menu if click outside
     if (!target.closest('.account-dropdown') && !target.closest('.top-icon.account')) {
       this.accountMenuOpen = false;
     }
   }
-
 }
